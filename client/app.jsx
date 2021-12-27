@@ -6,10 +6,10 @@ import { ApiContext } from './utils/api_context';
 import { AuthContext } from './utils/auth_context';
 import { useApi } from './utils/use_api';
 import { useJwtRefresh } from './utils/use_jwt_refresh';
-import './app.css';
 import { RolesContext } from './utils/roles_context';
 import { parseJwt } from './utils/parse_jwt';
 import { useLaunchSettings } from './utils/use_launch_settings';
+import './app.css';
 
 export const App = () => {
   const launchSettings = useLaunchSettings();
@@ -37,7 +37,6 @@ export const App = () => {
   }, []);
 
   const jwtPayload = parseJwt(authToken);
-  console.log(jwtPayload);
 
   // don't display anything while trying to get user token
   // can display a loading screen here if desired
