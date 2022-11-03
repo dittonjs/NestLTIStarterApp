@@ -23,17 +23,19 @@ export const App = () => {
   const api = useApi(authToken);
 
   // get initial jwt using refresh token
-  useEffect(async () => {
-    // skip initial jwt fetch while in LTI tool
-    if (launchSettings.isLTI) {
+  useEffect(() => {
+    const makeRequest = async () => {
+      if (launchSettings.isLTI) {
+        setLoading(false);
+        return;
+      }
+      const result = await api.get('/refresh_token');
+      if (result.token) {
+        setAuthToken(result.token);
+      }
       setLoading(false);
-      return;
-    }
-    const result = await api.get('/refresh_token');
-    if (result.token) {
-      setAuthToken(result.token);
-    }
-    setLoading(false);
+    };
+    makeRequest();
   }, []);
 
   const jwtPayload = parseJwt(authToken);
