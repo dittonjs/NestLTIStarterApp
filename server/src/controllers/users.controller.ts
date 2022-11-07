@@ -72,6 +72,7 @@ export class UsersController {
       const token = this.jwtService.issueToken({
         userId: user.id,
         roles: [RoleKey.USER],
+        contextId: "UNUSED"
       });
       const refreshJwtToken = this.jwtService.issueRefreshToken({
         id: user.refreshTokens[0].id,

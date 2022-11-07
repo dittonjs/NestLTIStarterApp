@@ -1,17 +1,16 @@
 import { Body, Controller, Param, Post, Render, UseGuards } from '@nestjs/common';
-import { JwtService } from 'server/providers/services/jwt.service';
-import { Skip } from 'server/decorators/skip.decorator';
-import { AuthGuard } from 'server/providers/guards/auth.guard';
-import { LTIGuard } from 'server/providers/guards/lti.guard';
-import { UserObj } from 'server/decorators/user.decorator';
-import { LTILaunchDto } from 'server/dto/lti_launch.dto';
-import { RoleKey } from 'server/entities/role.entity';
-import { LTILaunchService } from 'server/providers/services/lti_launch.service';
-import { User } from 'server/entities/user.entity';
+import { JwtService } from 'src/providers/services/jwt.service';
+import { Skip } from 'src/decorators/skip.decorator';
+import { AuthGuard } from 'src/providers/guards/auth.guard';
+import { LTIGuard } from 'src/providers/guards/lti.guard';
+import { UserObj } from 'src/decorators/user.decorator';
+import { LTILaunchDto } from 'src/dto/lti_launch.dto';
+import { User, RoleKey } from '@prisma/client';
+import { PrismaService } from 'src/providers/services/prisma.service';
 
 @Controller()
 export class LTILaunchesController {
-  constructor(private jwtService: JwtService, private ltiLaunchesService: LTILaunchService) {}
+  constructor(private jwtService: JwtService, private prisma: PrismaService) {}
 
   @Post('/lti_launches')
   @Skip(AuthGuard)
@@ -36,8 +35,12 @@ export class LTILaunchesController {
   @UseGuards(LTIGuard)
   @Render('index')
   async show(@Param('token') token: string, @Body() body: LTILaunchDto, @UserObj() user: User) {
-    const ltiLaunchConfig = await this.ltiLaunchesService.findByToken(token);
-    console.log(ltiLaunchConfig);
+    const ltiLaunchConfig = await this.prisma.lTILaunch.findUnique({
+      where: {
+        token
+      }
+    });
+
     const settings = {
       isLTI: true,
       ltiLaunchParams: body,

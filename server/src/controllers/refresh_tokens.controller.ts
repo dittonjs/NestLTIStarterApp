@@ -46,6 +46,7 @@ export class RefreshTokensController {
     const token = this.jwtService.issueToken({
       userId: user.id,
       roles: user.userRoles.map((r) => r.role.roleKey),
+      contextId: "UNUSED"
     });
     return { token };
   }

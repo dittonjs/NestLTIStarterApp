@@ -1,7 +1,5 @@
 import { useContext, useState } from 'react';
 import { ApiContext } from '../../../utils/api_context';
-import { Button } from '../../common/button';
-import { Input } from '../../common/input';
 import { ContentItemSelectionForm } from '../common/content_item_selection_form';
 
 export const AssignmentSelection = () => {
@@ -20,12 +18,12 @@ export const AssignmentSelection = () => {
 
   return (
     <>
-      <div className="text-lg">Assignment Selection Example</div>
+      <div>Assignment Selection Example</div>
       <div>
-        <Input type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} />
-        <Button type="button" onClick={createAssignment}>
+        <input type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} />
+        <button type="button" onClick={createAssignment}>
           Create Assignment
-        </Button>
+        </button>
       </div>
     </>
   );

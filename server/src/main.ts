@@ -12,8 +12,8 @@ async function bootstrap() {
   let httpsOptions;
   if (process.env.USE_SSL === "true") {
     httpsOptions = {
-      key: fs.readFileSync("./private-key.pem"),
-      cert: fs.readFileSync("./public-cert.pem"),
+      key: fs.readFileSync("../private-key.pem"),
+      cert: fs.readFileSync("../public-cert.pem"),
     };
   }
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {

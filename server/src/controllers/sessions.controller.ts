@@ -72,6 +72,7 @@ export class SessionsController {
     const token = this.jwtService.issueToken({
       userId: user.id,
       roles: user.userRoles.map((r) => r.role.roleKey),
+      contextId: "UNUSED"
     });
 
     const refreshJwtToken = this.jwtService.issueRefreshToken({
